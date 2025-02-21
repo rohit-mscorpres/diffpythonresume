@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curriculum Vitae</title>
+    <style> 
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px auto;
+            padding: 20px;
+            max-width: 800px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #0073e6;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+        .content p {
+            font-size: 14px;
+            margin: 8px 0;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        ul li {
+            padding-left: 20px;
+            position: relative;
+            margin-bottom: 5px;
+        }
+        ul li::before {
+            content: "\2022";
+            position: absolute;
+            left: 0;
+            color: #0073e6;
+            font-weight: bold;
+        }
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #0073e6;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">Curriculum Vitae</div>
+        
+        <div class="content">
+            <p><strong>Candidate Name:</strong> {{ cv_data.basic_details.candidate_name }}</p>
+            <p><strong>Address:</strong> {{  cv_data.basic_details.ho_no }}, {{  cv_data.basic_details.village_city }}, {{  cv_data.basic_details.district }} - {{  cv_data.basic_details.pincode }}</p>
+            <p><strong>Mobile No:</strong> {{  cv_data.basic_details.mob_no }}</p>
+            <p><strong>Email:</strong> {{  cv_data.basic_details.email }}</p>
+            
+            <div class="section-title">Objective</div>
+            <p>{{ cv_data.basic_details.objective }}</p>
+            
+            <div class="section-title">Applying Profile</div>
+            <ul>
+                <li>{{ cv_data.basic_details.applying_profile }}</li>
+            </ul>
+
+            <div class="section-title">Education Qualification</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Degree</th>
+                        <th>Board/University</th>
+                        <th>Subject</th>
+                        <th>Year of Passing</th>
+                        <!-- <th>Score</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for edu in cv_data.edu_qualification %}
+                    <tr>
+                        <td>{{ edu.emp_passed_exam }}</td>
+                        <td>{{ edu.emp_passed_board }}</td>
+                        <td>{{ edu.emp_passed_subject }}</td>
+                        <td>{{ edu.emp_passed_year }}</td>
+                        <!-- <td>{{ edu.emp_passed_score }}</td> -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>            
+            
+            <div class="section-title">Work Experience</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th>Designation</th>
+                        <th>Date of Joining</th>
+                        <th>Date of Leaving</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for wexp in cv_data.work_experience %}
+                    <tr>
+                        <td>{{ wexp.emp_company }}</td>
+                        <td>{{ wexp.emp_designation }}</td>
+                        <td>{{ wexp.emp_doj }}</td>
+                        <td>{{ wexp.emp_dol }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <div class="section-title">Personal Details</div>
+            <ul>
+                <li><strong>Father's Name:</strong> {{ cv_data.personal_details.father_name }}</li>
+                <li><strong>Date of Birth:</strong> {{ cv_data.personal_details.dob }}</li>
+                <li><strong>Sex:</strong> {{ cv_data.personal_details.sex }}</li>
+                <li><strong>Marital Status:</strong> {{ cv_data.personal_details.marital_status }}</li>
+                <li><strong>Nationality:</strong> {{ cv_data.personal_details.nationality }}</li>
+                <li><strong>Language:</strong> {{ cv_data.personal_details.language }}</li>
+            </ul>
+
+            <div class="section-title">Declaration</div>
+            <p>I hereby declare that all the information given above is correct to the best of my knowledge.</p>
+        </div>
+        
+        <div class="footer">
+            <p>Date: ..................... </p>
+            <div>
+                <p>Place: {{ cv_data.personal_details.place }}</p>
+                <p>({{ cv_data.basic_details.candidate_name }})</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+# from flask import Flask, request, jsonify, send_file
+# import requests
+# import pdfkit
+# import os
+# import time
+# from jinja2 import Environment, FileSystemLoader
+# from threading import Timer
+# import datetime
+
+# app = Flask(__name__)
+# UPLOADS_DIR = './uploads/'
+# TEMPLATES_DIR = './TEMPLATE_DIR/'
+# app.secret_key = "Resume_app"
+
+
+# os.makedirs(UPLOADS_DIR, exist_ok=True)
+# os.makedirs(TEMPLATES_DIR, exist_ok=True)
+
+
+# CONFIG = pdfkit.configuration(wkhtmltopdf="C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe")
+# @app.route("/download-cv", methods=["GET"])
+# def download_cv():
+#     token = request.headers.get("Authorization")
+    
+#     if not token:
+#         return jsonify({"error": "Token not provided"}), 401  
+
+#     if token.startswith("Bearer "):
+#         token = token.split(" ")[1]
+
+#     # print("Token being sent after cleanup:", token)
+
+#     node_api_url = "http://localhost:3000/api/fetch-cv"
+#     headers = {"Authorization": token}
+#     response = requests.get(node_api_url, headers=headers)
+
+#     if response.status_code != 200:
+#         return jsonify({"error": "Error fetching CV"}), response.status_code
+
+#     response_data = response.json()
+#     cv_data = response_data.get("data", {})  
+
+#     # Ensure all sections exist
+#     cv_data["basic_details"] = cv_data.get("basic_details", {})
+#     cv_data["edu_qualification"] = cv_data.get("edu_qualification", [])
+#     cv_data["personal_details"] = cv_data.get("personal_details", {})
+#     cv_data["work_experience"] = cv_data.get("work_experience", {})
+
+#     # Check if basic details exist
+#     if not cv_data["basic_details"]:
+#         return jsonify({"error": "CV data not found"}), 404
+
+
+#     print("CV data being sent after cleanup:", cv_data)
+
+#     env = Environment(loader=FileSystemLoader(TEMPLATES_DIR))
+#     template = env.get_template("cv_template.html")  
+
+#     html_content = template.render(cv_data=cv_data)
+
+#     pdf_filename = f"cv_{cv_data['basic_details'].get('candidate_name', 'unknown')}.pdf"
+#     pdf_filepath = os.path.join(UPLOADS_DIR, pdf_filename)
+
+#     pdfkit.from_string(html_content, pdf_filepath, configuration=CONFIG)
+
+#     Timer(3600, delete_file, [pdf_filepath]).start()
+
+#     # return send_file(pdf_filepath, as_attachment=True)
+#     return jsonify({"file_path": pdf_filepath}), 200 
+
+# def delete_file(filepath):
+#     """Deletes the generated PDF after 1 hour"""
+#     try:
+#         if os.path.exists(filepath):
+#             os.remove(filepath)
+#             print(f"Deleted file: {filepath}")
+#     except Exception as e:
+#         print(f"Error deleting file {filepath}: {e}")
+
+# if __name__ == "__main__":
+#     app.run(port = 5001, debug=True)
+
+
+Flask==3.1.0
+Jinja2==3.1.5
+MarkupSafe==3.0.2
+pdfkit==1.0.0
+requests==2.32.3
+Werkzeug==3.1.3
+urllib3==1.26.20
+certifi==2024.12.14
+tzdata==2025.1
+
+
+
+
+
+# from flask import Flask, request, jsonify, send_file
+# import requests
+# import os
+# import time
+# from threading import Timer
+# from jinja2 import Environment, FileSystemLoader
+# from xhtml2pdf import pisa
+
+# app = Flask(__name__)
+# UPLOADS_DIR = './uploads/'
+# TEMPLATES_DIR = './TEMPLATE_DIR/'
+# app.secret_key = "Resume_app"
+
+# os.makedirs(UPLOADS_DIR, exist_ok=True)
+# os.makedirs(TEMPLATES_DIR, exist_ok=True)
+
+# @app.route("/download-cv", methods=["GET"])
+# def download_cv():
+#     token = request.headers.get("Authorization")
+    
+#     if not token:
+#         return jsonify({"error": "Token not provided"}), 401  
+
+#     if token.startswith("Bearer "):
+#         token = token.split(" ")[1]
+
+#     node_api_url = "http://localhost:3000/api/fetch-cv"
+#     headers = {"Authorization": token}
+#     response = requests.get(node_api_url, headers=headers)
+
+#     if response.status_code != 200:
+#         return jsonify({"error": "Error fetching CV"}), response.status_code
+
+#     response_data = response.json()
+#     cv_data = response_data.get("data", {})  
+
+#     if not cv_data.get("basic_details"):
+#         return jsonify({"error": "CV data not found"}), 404
+
+#     candidate_name = cv_data["basic_details"].get("candidate_name", "unknown")
+#     pdf_filename = f"cv_{candidate_name}.pdf"
+#     pdf_filepath = os.path.join(UPLOADS_DIR, pdf_filename)
+
+#     # Generate PDF
+#     generate_pdf(cv_data, pdf_filepath)
+
+#     Timer(3600, delete_file, [pdf_filepath]).start()
+
+#     return jsonify({"file_path": pdf_filepath}), 200 
+
+# def generate_pdf(cv_data, pdf_filepath):
+#     env = Environment(loader=FileSystemLoader(TEMPLATES_DIR))
+#     template = env.get_template("cv_template.html")  
+
+#     html_content = template.render(cv_data=cv_data)
+    
+#     with open(pdf_filepath, "wb") as pdf_file:
+#         pisa.CreatePDF(html_content, dest=pdf_file)
+
+# def delete_file(filepath):
+#     """Deletes the generated PDF after 1 hour"""
+#     try:
+#         if os.path.exists(filepath):
+#             os.remove(filepath)
+#             print(f"Deleted file: {filepath}")
+#     except Exception as e:
+#         print(f"Error deleting file {filepath}: {e}")
+
+# if __name__ == "__main__":
+#     app.run(port=5001, debug=True)

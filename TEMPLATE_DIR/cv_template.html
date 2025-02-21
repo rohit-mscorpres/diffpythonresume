@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curriculum Vitae</title>
+    <style> 
+        @page {
+            size: A4;
+            margin: 5mm;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            background: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 750px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+            page-break-inside: avoid;
+        }
+        .header {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 1px solid #333;
+            /* padding-bottom: 5px; */
+            margin-bottom: 0px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 5px;
+            color: #0073e6;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 0px;
+            /* page-break-after: avoid; */
+        }
+        .content p {
+            font-size: 12px;
+            margin: 2px 0;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 5px;
+        }
+        ul li {
+            padding-left: 15px;
+            position: relative;
+            margin-bottom: 1px;
+        }
+        ul li::before {
+            content: "\2022";
+            position: absolute;
+            left: 0;
+            color: #0073e6;
+            font-weight: bold;
+        }
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            margin-top: 2px;
+            border-top: 1px solid #ddd;
+            padding-top: 1px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+            font-size: 12px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 5px;
+            text-align: left;
+        }
+        th {
+            background-color: #0073e6;
+            color: white;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">CURRICULUM-VITAE</div>
+        
+        <div class="content">
+            <ul>
+                <li><strong>Candidate Name:</strong> {{ cv_data.basic_details.candidate_name }}</li>
+                <li><strong>Address:</strong> {{ cv_data.basic_details.ho_no }}, {{ cv_data.basic_details.village_city }}, {{ cv_data.basic_details.district }} - {{ cv_data.basic_details.pincode }}</li>
+                <li><strong>Mobile No:</strong> {{ cv_data.basic_details.mob_no }}</li>
+                <li><strong>Email:</strong> {{ cv_data.basic_details.email }}</li>
+            </ul>
+            
+            <div class="section-title">Objective</div>
+            <p>{{ cv_data.basic_details.objective }}</p>
+            
+            <div class="section-title">Applying Profile</div>
+                <p>{{ cv_data.basic_details.applying_profile }}<p>
+
+            <div class="section-title">Education Qualification</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Degree</th>
+                        <th>Board/University</th>
+                        <th>Subject</th>
+                        <th>Year of Passing</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for edu in cv_data.edu_qualification %}
+                    <tr>
+                        <td>{{ edu.emp_passed_exam }}</td>
+                        <td>{{ edu.emp_passed_board }}</td>
+                        <td>{{ edu.emp_passed_subject }}</td>
+                        <td>{{ edu.emp_passed_year }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>            
+            
+            <div class="section-title">Work Experience</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th>Designation</th>
+                        <th>Date of Joining</th>
+                        <th>Date of Leaving</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for wexp in cv_data.work_experience %}
+                    <tr>
+                        <td>{{ wexp.emp_company }}</td>
+                        <td>{{ wexp.emp_designation }}</td>
+                        <td>{{ wexp.emp_doj }}</td>
+                        <td>{{ wexp.emp_dol }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <div class="section-title">Personal Details</div>
+            <ul>
+                <li><strong>Date of Birth:</strong> {{ cv_data.personal_details.dob }}</li>
+                <li><strong>Sex:</strong> {{ cv_data.personal_details.sex }}</li>
+                <li><strong>Marital Status:</strong> {{ cv_data.personal_details.marital_status }}</li>
+                <li><strong>Nationality:</strong> {{ cv_data.personal_details.nationality }}</li>
+                <li><strong>Language:</strong> {{ cv_data.personal_details.language }}</li>
+            </ul>
+
+            <div class="section-title">Declaration</div>
+            <p>I hereby declare that all the information given above is correct to the best of my knowledge.</p>
+        </div>
+        
+        <div class="footer">
+            <p>Date: ..................... </p>
+            <div>
+                <p>Place: {{ cv_data.personal_details.place }}</p>
+                <p>({{ cv_data.basic_details.candidate_name }})</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
