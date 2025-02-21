@@ -29,7 +29,6 @@ def download_cv():
     pdf_filename = f"cv_{candidate_name}.pdf"
     pdf_filepath = os.path.join(UPLOADS_DIR, pdf_filename)
 
-    # Generate PDF
     generate_pdf(cv_data, pdf_filepath)
 
     Timer(3600, delete_file, [pdf_filepath]).start()
