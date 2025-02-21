@@ -18,28 +18,12 @@ os.makedirs(TEMPLATES_DIR, exist_ok=True)
 def home():
     return "App running successfully!", 200
 
-@app.route("/download-cv", methods=["GET"])
+@app.route("/download-cv", methods=["POST"])
 def download_cv():
-    token = request.headers.get("Authorization")
-    
-    if not token:
-        return jsonify({"error": "Token not provided"}), 401  
+    cv_data = request.json 
 
-    if token.startswith("Bearer "):
-        token = token.split(" ")[1]
-
-    node_api_url = "http://localhost:3000/api/fetch-cv"
-    headers = {"Authorization": token}
-    response = requests.get(node_api_url, headers=headers)
-
-    if response.status_code != 200:
-        return jsonify({"error": "Error fetching CV"}), response.status_code
-
-    response_data = response.json()
-    cv_data = response_data.get("data", {})  
-
-    if not cv_data.get("basic_details"):
-        return jsonify({"error": "CV data not found"}), 404
+    if not cv_data:
+        return jsonify({"error": "CV data not provided"}), 400
 
     candidate_name = cv_data["basic_details"].get("candidate_name", "unknown")
     pdf_filename = f"cv_{candidate_name}.pdf"
@@ -50,7 +34,7 @@ def download_cv():
 
     Timer(3600, delete_file, [pdf_filepath]).start()
 
-    return jsonify({"file_path": pdf_filepath}), 200 
+    return jsonify({"file_path": pdf_filepath}), 200
 
 def generate_pdf(cv_data, pdf_filepath):
     env = Environment(loader=FileSystemLoader(TEMPLATES_DIR))
